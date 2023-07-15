@@ -35,14 +35,14 @@ $(document).ready(function(){
 
     // typing text animation script
     var typed = new Typed(".typing", {
-        strings: ["Azure Architect", "Cloud Enginner"],
+        strings: ["Software Engineer", "Web Developer"],
         typeSpeed: 100,
         backSpeed: 60,
         loop: true
     });
 
     var typed = new Typed(".typing-2", {
-        strings: ["Cloud Expert, J2EE Expert"],
+        strings: ["Web Developer"],
         typeSpeed: 100,
         backSpeed: 60,
         loop: true
