@@ -1,0 +1,325 @@
+show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| test               |
++--------------------+
+3 rows in set (0.01 sec)
+
+grant all privileges on * . * to 'student'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected(0.00 sec)
+
+show grants for 'student'@'localhost';
++-------------------------------------------------------------------------------------------------------------------------+
+| Grants for student@localhost                                                                                            |
++-------------------------------------------------------------------------------------------------------------------------+
+| GRANT ALL PRIVILEGES ON *.* TO 'student'@'localhost' IDENTIFIED BY PASSWORD '*EC321AA86137CDF84E8F2B582DD982D3776B9ED8' |
++-------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+revoke all privileges,grant option from 'student'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+ drop user 'student'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+ show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| test               |
++--------------------+
+3 rows in set (0.00 sec)
+
+
+mysql> create database acme;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> drop database acme;
+Query OK, 0 rows affected (0.03 sec)
+
+
+use mysql;
+Database changed
+
+mysql> CREATE TABLE users(id INT AUTO_INCREMENT,first_name VARCHAR(100),last_name VARCHAR(100),email VARCHAR(50),password VARCHAR(20),location VARCHAR(100),dept VARCHAR(100),is_Admin TINYINT(1),register_date DATETIME,PRIMARY KEY(id));
+Query OK, 0 rows affected (0.03 sec)
+
+
+drop table users;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables;
++---------------------------+
+| Tables_in_mysql           |
++---------------------------+
+| columns_priv              |
+| db                        |
+| event                     |
+| func                      |
+| general_log               |
+| help_category             |
+| help_keyword              |
+| help_relation             |
+| help_topic                |
+| host                      |
+| ndb_binlog_index          |
+| plugin                    |
+| proc                      |
+| procs_priv                |
+| servers                   |
+| slow_log                  |
+| tables_priv               |
+| time_zone                 |
+| time_zone_leap_second     |
+| time_zone_name            |
+| time_zone_transition      |
+| time_zone_transition_type |
+| user                      |
++---------------------------+
+23 rows in set (0.15 sec)
+
+
+mysql> CREATE TABLE users(id INT AUTO_INCREMENT,first_name VARCHAR(100),last_name VARCHAR(100),email VARCHAR(50),password VARCHAR(20),location VARCHAR(100),dept VARCHAR(100),is_Admin TINYINT(1),register_date DATETIME,PRIMARY KEY(id));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into users(first_name,last_name,email,password,location,dept,is_admin,register_date)values('pooja','yadav','pooja@gmail.com',1234,'hyderabad','cse',1,now());
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into users(first_name,last_name,email,password,location,dept,is_admin,register_date)values('MD','vasee','vasee@gmail.com',123456,'warangal','cse',2,now());
+Query OK, 1 row affected (0.00 sec)
+
+
+mysql> select * from users;
++----+------------+-----------+-----------------+----------+-----------+------+----------+---------------------+
+| id | first_name | last_name | email           | password | location  | dept | is_Admin | register_date       |
++----+------------+-----------+-----------------+----------+-----------+------+----------+---------------------+
+|  1 | pooja      | yadav     | pooja@gmail.com | 1234     | hyderabad | cse  |        1 | 2023-07-16 17:23:05 |
+|  2 | MD         | vasee     | vasee@gmail.com | 123456   | warangal  | cse  |        2 | 2023-07-16 17:24:30 |
++----+------------+-----------+-----------------+----------+-----------+------+----------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> select first_name,last_name from users;
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| pooja      | yadav     |
+| MD         | vasee     |
++------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from users where location='hyderabad';
++----+------------+-----------+-----------------+----------+-----------+------+----------+---------------------+
+| id | first_name | last_name | email           | password | location  | dept | is_Admin | register_date       |
++----+------------+-----------+-----------------+----------+-----------+------+----------+---------------------+
+|  1 | pooja      | yadav     | pooja@gmail.com | 1234     | hyderabad | cse  |        1 | 2023-07-16 17:23:05 |
++----+------------+-----------+-----------------+----------+-----------+------+----------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from users where location='hyderabad' and dept='cse';
++----+------------+-----------+-----------------+----------+-----------+------+----------+---------------------+
+| id | first_name | last_name | email           | password | location  | dept | is_Admin | register_date       |
++----+------------+-----------+-----------------+----------+-----------+------+----------+---------------------+
+|  1 | pooja      | yadav     | pooja@gmail.com | 1234     | hyderabad | cse  |        1 | 2023-07-16 17:23:05 |
++----+------------+-----------+-----------------+----------+-----------+------+----------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into users(first_name,last_name,email,password,location,dept,is_admin,register_date)values('shivani','yadav','shivani@gmail.com',2345,'parkal','ece',1,now()),('rama','yadav','rama@gmail.com',678,'IT','US',6,now());
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+
+mysql> select * from users where is_admin=1;
++----+------------+-----------+-------------------+----------+-----------+------+----------+---------------------+
+| id | first_name | last_name | email             | password | location  | dept | is_Admin | register_date       |
++----+------------+-----------+-------------------+----------+-----------+------+----------+---------------------+
+|  1 | pooja      | yadav     | pooja@gmail.com   | 1234     | hyderabad | cse  |        1 | 2023-07-16 17:23:05 |
+|  3 | shivani    | yadav     | shivani@gmail.com | 2345     | parkal    | ece  |        1 | 2023-07-16 17:37:11 |
++----+------------+-----------+-------------------+----------+-----------+------+----------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from users where is_admin>0;
++----+------------+-----------+-------------------+----------+-----------+------+----------+---------------------+
+| id | first_name | last_name | email             | password | location  | dept | is_Admin | register_date       |
++----+------------+-----------+-------------------+----------+-----------+------+----------+---------------------+
+|  1 | pooja      | yadav     | pooja@gmail.com   | 1234     | hyderabad | cse  |        1 | 2023-07-16 17:23:05 |
+|  2 | MD         | vasee     | vasee@gmail.com   | 123456   | warangal  | cse  |        2 | 2023-07-16 17:24:30 |
+|  3 | shivani    | yadav     | shivani@gmail.com | 2345     | parkal    | ece  |        1 | 2023-07-16 17:37:11 |
+|  4 | rama       | yadav     | rama@gmail.com    | 678      | IT        | US   |        6 | 2023-07-16 17:37:11 |
++----+------------+-----------+-------------------+----------+-----------+------+----------+---------------------+
+4 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+mysql> alter table users add age varchar(3);
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> alter table users modify column age int(3);
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from users order by last_name  ASC;
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+| id | first_name | last_name | email             | password | location | dept | is_Admin | register_date       | age  |
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+|  2 | MD         | vasee     | vasee@gmail.com   | 123456   | warangal | cse  |        2 | 2023-07-16 17:24:30 | NULL |
+|  3 | shivani    | yadav     | shivani@gmail.com | 2345     | parkal   | ece  |        1 | 2023-07-16 17:37:11 | NULL |
+|  4 | rama       | yadav     | rama@gmail.com    | 678      | IT       | US   |        6 | 2023-07-16 17:37:11 | NULL |
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+3 rows in set (0.00 sec)
+
+mysql> select concat(first_name, ' ',last_name) as 'pooja' ,dept from users;
++---------------+------+
+| pooja         | dept |
++---------------+------+
+| MD vasee      | cse  |
+| shivani yadav | ece  |
+| rama yadav    | US   |
++---------------+------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct location from users;
++----------+
+| location |
++----------+
+| warangal |
+| parkal   |
+| IT       |
++----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from users where dept like 'cse%';
++----+------------+-----------+-----------------+----------+----------+------+----------+---------------------+------+
+| id | first_name | last_name | email           | password | location | dept | is_Admin | register_date       | age  |
++----+------------+-----------+-----------------+----------+----------+------+----------+---------------------+------+
+|  2 | MD         | vasee     | vasee@gmail.com | 123456   | warangal | cse  |        2 | 2023-07-16 17:24:30 | NULL |
++----+------------+-----------+-----------------+----------+----------+------+----------+---------------------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from users where dept like 'ece%';
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+| id | first_name | last_name | email             | password | location | dept | is_Admin | register_date       | age  |
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+|  3 | shivani    | yadav     | shivani@gmail.com | 2345     | parkal   | ece  |        1 | 2023-07-16 17:37:11 | NULL |
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from users where dept like 't%';
+Empty set (0.00 sec)
+
+mysql> select * from users where dept  not like 't%';
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+| id | first_name | last_name | email             | password | location | dept | is_Admin | register_date       | age  |
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+|  2 | MD         | vasee     | vasee@gmail.com   | 123456   | warangal | cse  |        2 | 2023-07-16 17:24:30 | NULL |
+|  3 | shivani    | yadav     | shivani@gmail.com | 2345     | parkal   | ece  |        1 | 2023-07-16 17:37:11 | NULL |
+|  4 | rama       | yadav     | rama@gmail.com    | 678      | IT       | US   |        6 | 2023-07-16 17:37:11 | NULL |
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from users where dept  not like 'cse%';
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+| id | first_name | last_name | email             | password | location | dept | is_Admin | register_date       | age  |
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+|  3 | shivani    | yadav     | shivani@gmail.com | 2345     | parkal   | ece  |        1 | 2023-07-16 17:37:11 | NULL |
+|  4 | rama       | yadav     | rama@gmail.com    | 678      | IT       | US   |        6 | 2023-07-16 17:37:11 | NULL |
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from users where dept  in ('cse','ece');
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+| id | first_name | last_name | email             | password | location | dept | is_Admin | register_date       | age  |
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+|  2 | MD         | vasee     | vasee@gmail.com   | 123456   | warangal | cse  |        2 | 2023-07-16 17:24:30 | NULL |
+|  3 | shivani    | yadav     | shivani@gmail.com | 2345     | parkal   | ece  |        1 | 2023-07-16 17:37:11 | NULL |
++----+------------+-----------+-------------------+----------+----------+------+----------+---------------------+------+
+2 rows in set (0.00 sec)
+
+
+mysql> create index student on users(location);
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> drop index student on users;
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
