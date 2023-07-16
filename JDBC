@@ -1,0 +1,61 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class JDBC_Connection_Demo {
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException cnf) {
+            System.out.println("Driver could not be loaded: " + cnf);
+        }
+    }
+
+    public static void main(String[] args) {
+        String connectionUrl = "jdbc:mysql://localhost:3306/EXPDB";
+        String dbUser = "root";
+        String dbPwd = "mysql";
+        Connection conn = null;
+        ResultSet rs = null;
+        String queryString = "SELECT ID, NAME FROM EXPTABLE";
+
+        try {
+            conn = DriverManager.getConnection(connectionUrl, dbUser, dbPwd);
+            Statement stmt = conn.createStatement();
+
+            // INSERT A RECORD
+            stmt.executeUpdate("INSERT INTO EXPTABLE (NAME) VALUES ('TINU K')");
+
+            // SELECT ALL RECORDS FROM EXPTABLE
+            rs = stmt.executeQuery(queryString);
+
+            System.out.println("ID \tNAME");
+            System.out.println("============");
+            while (rs.next()) {
+                System.out.print(rs.getInt("ID") + ".\t" + rs.getString("NAME"));
+                System.out.println();
+            }
+        } catch (SQLException sqle) {
+            System.out.println("SQL Exception thrown: " + sqle);
+        } finally {
+            // Close resources in the reverse order of their creation
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println("Error closing ResultSet: " + e);
+                }
+            }
+
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    System.out.println("Error closing Connection: " + e);
+                }
+            }
+        }
+    }
+}
